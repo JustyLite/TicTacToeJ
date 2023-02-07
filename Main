@@ -1,0 +1,174 @@
+import java.util.Scanner;
+class Help
+{
+    public void moveO()
+    {
+        System.out.println("Ход X: ");
+    }
+    public void moveX()
+    {
+        System.out.println("Ход O: ");
+    }
+    public void draw()
+    {
+        System.out.println("Ничья!");
+    }
+    public void oWin()
+    {
+        System.out.println("\t\tПобедили нолики!");
+    }
+    public void xWin()
+    {
+        System.out.println("\t\tПобедили крестики!");
+    }
+    public void errField()
+    {
+        System.out.println("Это поле уже занято!");
+    }
+    public void errChar()
+    {
+        System.out.println("Ошибка введенного символа! Попробуйте еще раз");
+    }
+    public void helpOnStart()
+    {
+        System.out.println("\t\tИгра крестики-нолики. Написана узбеком, использует узбек-код.");
+        System.out.println("\t\tВ игре слеледующая нумерация полей: ");
+        System.out.println("\t\t7|8|9");
+        System.out.println("\t\t4|5|6");
+        System.out.println("\t\t1|2|3");
+        System.out.println("\t\tЧтобы сделать ход, выберите цифру 1-9 и нажмите Enter.");
+        System.out.println("\t\tПервые ходят О: ");
+    }
+}
+class Main
+{
+
+    public static boolean checkWin(int move,char a1, char a2, char a3, char b1, char b2,char b3,char c1,char c2,char c3)
+    {
+        boolean b = true;
+        boolean a = false;
+        Help Help = new Help();
+        if ((a1 == 'o') && (a2=='o') && (a3=='o') ||
+                (b1 == 'o') && (b2=='o') && (b3=='o') ||
+                (c1 == 'o') && (c2=='o') && (c3=='o') ||
+                (a1 == 'o') && (b2=='o') && (c3=='o') ||
+                (a3 == 'o') && (b2=='o') && (c1=='o'))
+        {
+            Help.oWin();
+            return b;
+        }
+        else if ((a1 == 'x') && (a2=='x') && (a3=='x') ||
+                (b1 == 'x') && (b2=='x') && (b3=='x') ||
+                (c1 == 'x') && (c2=='x') && (c3=='x') ||
+                (a1 == 'x') && (b2=='x') && (c3=='x') ||
+                (a3 == 'x') && (b2=='x') && (c1=='x'))
+        {
+            Help.xWin();
+            return b;
+        }
+        else if (a1!='-' && a2!='-' && a3!='-' && b1!='-' && b2!='-' && b3!='-' && c1!='-' && c2!='-' && c3!='-')
+        {
+            Help.draw();
+            return b;
+        }
+        else
+        {
+            return a;
+        }
+    }
+    public static void field(char a1, char a2, char a3, char b1, char b2,char b3,char c1,char c2,char c3)
+    {
+        System.out.println("\t\t\t"+c1+"|"+c2+"|"+c3);
+        System.out.println("\t\t\t"+b1+"|"+b2+"|"+b3);
+        System.out.println("\t\t\t"+a1+"|"+a2+"|"+a3);
+    }
+    public static void main(String[] args)
+    {
+        Help Help = new Help();
+        Scanner in = new Scanner(System.in);
+        char a1='-',a2='-',a3='-',b1='-',b2='-',b3='-',c1='-',c2='-',c3='-',input;
+        int move = 0;
+        int stopGame = 0;
+        Help.helpOnStart();
+
+        while (stopGame==0)
+        {
+            boolean restart = checkWin(move,a1,a2,a3,b1,b2,b3,c1,c2,c3);
+            if (restart==true)
+            {
+                System.out.println("Сыграть ещё раз? (y/n): ");
+                char yn = in.next().charAt(0);
+                if (yn=='y')
+                {
+                    a1='-'; a2='-'; a3='-';b1='-';b2='-';b3='-';c1='-';c2='-';c3='-';
+                    Help.helpOnStart();
+                }
+                else if (yn=='n')
+                {
+                    stopGame = 1;
+                    System.exit(0);
+                }
+            }
+        input = in.next().charAt(0);
+        switch(input) {
+            case '1':
+                if (move == 0 && a1=='-') {a1 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && a1=='-') {a1 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '2':
+                if (move == 0 && a2=='-') {a2 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && a2=='-') {a2 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '3':
+                if (move == 0 && a3=='-') {a3 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && a3=='-') {a3 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '4':
+                if (move == 0 && b1=='-') {b1 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && b1=='-') {b1 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '5':
+                if (move == 0 && b2=='-') {b2 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && b2=='-') {b2 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '6':
+                if (move == 0 && b3=='-') {b3 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && b3=='-') {b3 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '7':
+                if (move == 0 && c1=='-') {c1 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && c1=='-') {c1 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '8':
+                if (move == 0 && c2=='-') {c2 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && c2=='-') {c2 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            case '9':
+                if (move == 0 && c3=='-') {c3 = 'o'; move++;Help.moveO();}
+                else if (move == 1 && c3=='-') {c3 = 'x'; move--;Help.moveX();}
+                else Help.errField();
+                field(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+                break;
+            default:
+                Help.errChar();
+                continue;
+        }
+        }
+    }
+}
